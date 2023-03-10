@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
+import pl.seleniumdemo.pages.ResultsPage;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,13 +19,12 @@ public class HotelSearchTest extends BaseTest {
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.setCity("Dubai");
         hotelSearchPage.setDates("27/04/2021","29/04/2021");
-        hotelSearchPage.setTravelers();
+        hotelSearchPage.setTravelers(1,2);
         hotelSearchPage.performSearch();
 
-        List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class,'list_title')]//b"))
-                .stream()
-                .map(el->el.getAttribute("textContent"))//wczesniej uzywalismy el.getText() - ale nie zdazyly wczytac sie wszystkie hotele, wiec z atrybutu.
-                .collect(Collectors.toList());
+        ResultsPage resultsPage = new ResultsPage(driver);
+        List<String> hotelNames = resultsPage.getHotelNames();
+
 
         Assert.assertEquals("Jumeirah Beach Hotel",hotelNames.get(0));
         Assert.assertEquals("Oasis Beach Tower",hotelNames.get(1));
@@ -35,20 +36,15 @@ public class HotelSearchTest extends BaseTest {
     @Test
     public void NoCitySearchTest(){
 
-        driver.findElement(By.name("checkin")).sendKeys("17/03/2023");
-        driver.findElement(By.name("checkout")).click();
-        driver.findElements(By.xpath("//td[@class='day ' and text()='30']")).stream().filter(WebElement::isDisplayed)
-                .findFirst()
-                .ifPresent(WebElement::click);
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.setDates("25/04/2021","30/04/2021");
+        hotelSearchPage.setTravelers(0,1);
+        hotelSearchPage.performSearch();
 
-        driver.findElement(By.id("travellersInput")).click();
-        driver.findElement(By.id("adultPlusBtn")).click();
-        driver.findElement(By.id("childPlusBtn")).click();
-        driver.findElement(By.id("childPlusBtn")).click();
-        driver.findElement(By.xpath("//button[text()=' Search']")).click();
+        ResultsPage resultsPage = new ResultsPage(driver);
 
-        String result = driver.findElement(By.xpath("//h2[@class='text-center']")).getText();
-        Assert.assertTrue(result.equals("No Results Found"));
+        Assert.assertTrue(resultsPage.resultHeading.isDisplayed());
+        Assert.assertEquals(resultsPage.getHeadingText(),"No Results Found");
 
 
     }
