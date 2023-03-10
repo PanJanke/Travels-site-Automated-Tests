@@ -42,4 +42,41 @@ public class signUpTest {
         Assert.assertTrue(heading.getText().contains(lastName));
         driver.quit();
     }
+
+    @Test
+    public void signUpBlank(){
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+        driver.get("http://www.kurs-selenium.pl/demo/");
+
+        String lastName = "Testowy";
+
+        driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
+        driver.findElements(By.xpath("//a[text()='  Sign Up']")).get(1).click();
+        driver.findElement(By.xpath("//button[@type='submit' and text()=' Sign Up']")).click();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        List<String> alertList = driver.findElements(By.xpath("//div[@class='alert alert-danger']//p"))
+                .stream()
+                .map(el->el.getAttribute("textContent"))
+                .collect(Collectors.toList());
+
+
+        Assert.assertEquals("The Email field is required.",alertList.get(0));
+        Assert.assertEquals("The Password field is required.",alertList.get(1));
+        Assert.assertEquals("The Password field is required.",alertList.get(2));
+        Assert.assertEquals("The First name field is required.",alertList.get(3));
+        Assert.assertEquals("The Last Name field is required.",alertList.get(4));
+
+        driver.quit();
+
+
+    }
+
 }
