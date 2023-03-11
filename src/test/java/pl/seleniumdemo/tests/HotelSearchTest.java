@@ -30,17 +30,12 @@ public class HotelSearchTest extends BaseTest {
 
     @Test
     public void NoCitySearchTest(){
-
-        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        hotelSearchPage.setDates("25/04/2021","30/04/2021");
-        hotelSearchPage.setTravelers(0,1);
-        hotelSearchPage.performSearch();
-
-        ResultsPage resultsPage = new ResultsPage(driver);
+        ResultsPage resultsPage  = new HotelSearchPage(driver)
+        .setDates("25/04/2021","30/04/2021")
+        .setTravelers(0,1)
+        .performSearch();
 
         Assert.assertTrue(resultsPage.resultHeading.isDisplayed());
         Assert.assertEquals(resultsPage.getHeadingText(),"No Results Found");
-
-
     }
 }

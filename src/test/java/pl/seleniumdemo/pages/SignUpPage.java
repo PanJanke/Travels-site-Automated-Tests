@@ -35,32 +35,42 @@ public class SignUpPage {
     @FindBy(xpath = "//div[@class='alert alert-danger']//p")
     private List<WebElement> errors;
 
-    public void setFirstName(String firstName){
+    private WebDriver driver;
+
+    public SignUpPage setFirstName(String firstName){
         firstNameInput.sendKeys(firstName);
+        return this;
     }
 
-    public void setLastName(String lastName){
+    public SignUpPage setLastName(String lastName){
         lastNameInput.sendKeys(lastName);
+        return this;
     }
 
-    public void setPhone(String phone){
+    public SignUpPage setPhone(String phone){
         phoneInput.sendKeys(phone);
+        return this;
     }
 
-    public void setEmail(String email){
+    public SignUpPage setEmail(String email){
         emailInput.sendKeys(email);
+        return this;
     }
 
-    public void setPassword(String password){
+    public SignUpPage setPassword(String password){
         passwordInput.sendKeys(password);
+        return this;
     }
 
-    public void setConfirmpassword(String confirmpassword){
+    public SignUpPage setConfirmpassword(String confirmpassword){
         confirmpasswordInput.sendKeys(confirmpassword);
+        return this;
     }
 
-    public void signUp(){
+
+    public LoggedUserPage signUp(){
         signupButton.click();
+        return new LoggedUserPage(driver);
     }
     public List<String> getErrors(){
         return errors
@@ -70,6 +80,7 @@ public class SignUpPage {
 
     }
 
+    /*
     public void fillSignUpForm(String firstName,String lastName, String phone, String email, String password){
         setFirstName(firstName);
         setLastName(lastName);
@@ -89,9 +100,10 @@ public class SignUpPage {
         setConfirmpassword(user.getPassword());
         signUp();
     }
-
+*/
 
     public SignUpPage(WebDriver driver){
         PageFactory.initElements(driver,this);
+        this.driver=driver;
     }
 }

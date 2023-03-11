@@ -78,10 +78,10 @@ public class HotelSearchPage {
         return new ResultsPage(driver);
     }
 
-    public void openSignUpForm(){
+    public SignUpPage openSignUpForm(){
         myAccountLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        //driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         signUpLink.get(1).click();
+        return  new SignUpPage(driver);
     }
 
 }
