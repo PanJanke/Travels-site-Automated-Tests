@@ -42,32 +42,30 @@ public class HotelSearchPage {
     private List<WebElement> signUpLink;
 
 
-
-
-
     public HotelSearchPage(WebDriver driver){
         PageFactory.initElements(driver,this);
         this.driver=driver;
     }
 
 
-
-    public void setCity(String cityName){
+    public HotelSearchPage setCity(String cityName){
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
         String xpath =String.format("//span[@class='select2-match' and text()='%s']",cityName);
         driver.findElement(By.xpath(xpath)).click();
+        return this;
     }
 
-    public void setDates(String checkin, String checkout){
+    public HotelSearchPage setDates(String checkin, String checkout){
         checkinInput.sendKeys(checkin);
         checkoutInput.sendKeys(checkout);
+        return this;
     }
-
-    public void setTravelers(int adultsToAdd,int childToAdd){
+    public HotelSearchPage setTravelers(int adultsToAdd,int childToAdd){
         travelersInput.click();
         addTraveler(adultPlusBtn,adultsToAdd);
         addTraveler(childPlusBtn,childToAdd);
+        return this;
     }
 
     private void addTraveler(WebElement travelersBtn, int numberOfTravelers ){
@@ -75,8 +73,9 @@ public class HotelSearchPage {
             travelersBtn.click();
     }
 
-    public void performSearch(){
+    public ResultsPage performSearch(){
         searchButton.click();
+        return new ResultsPage(driver);
     }
 
     public void openSignUpForm(){

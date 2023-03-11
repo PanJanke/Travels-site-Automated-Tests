@@ -9,18 +9,16 @@ import java.util.List;
 
 public class HotelSearchTest extends BaseTest {
 
-
+//poodejscie fluent
     @Test
     public void searchHotelTest(){
 
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        hotelSearchPage.setCity("Dubai");
-        hotelSearchPage.setDates("27/04/2021","29/04/2021");
-        hotelSearchPage.setTravelers(1,2);
-        hotelSearchPage.performSearch();
-
-        ResultsPage resultsPage = new ResultsPage(driver);
-        List<String> hotelNames = resultsPage.getHotelNames();
+        List<String> hotelNames = hotelSearchPage
+                .setCity("Dubai")
+                .setDates("27/04/2021","29/04/2021")
+                .setTravelers(1,2)
+                .performSearch().getHotelNames();
 
 
         Assert.assertEquals("Jumeirah Beach Hotel",hotelNames.get(0));
