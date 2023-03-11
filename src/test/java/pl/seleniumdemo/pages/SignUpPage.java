@@ -29,7 +29,7 @@ public class SignUpPage {
     @FindBy(name = "confirmpassword")
     private WebElement confirmpasswordInput;
 
-    @FindBy(xpath = "//button[@type='submit' and text()=' Sign Up']" )
+    @FindBy(xpath = "//button[@type='submit' and text()=' Sign Up']")
     private WebElement signupButton;
 
     @FindBy(xpath = "//div[@class='alert alert-danger']//p")
@@ -37,45 +37,46 @@ public class SignUpPage {
 
     private WebDriver driver;
 
-    public SignUpPage setFirstName(String firstName){
+    public SignUpPage setFirstName(String firstName) {
         firstNameInput.sendKeys(firstName);
         return this;
     }
 
-    public SignUpPage setLastName(String lastName){
+    public SignUpPage setLastName(String lastName) {
         lastNameInput.sendKeys(lastName);
         return this;
     }
 
-    public SignUpPage setPhone(String phone){
+    public SignUpPage setPhone(String phone) {
         phoneInput.sendKeys(phone);
         return this;
     }
 
-    public SignUpPage setEmail(String email){
+    public SignUpPage setEmail(String email) {
         emailInput.sendKeys(email);
         return this;
     }
 
-    public SignUpPage setPassword(String password){
+    public SignUpPage setPassword(String password) {
         passwordInput.sendKeys(password);
         return this;
     }
 
-    public SignUpPage setConfirmpassword(String confirmpassword){
+    public SignUpPage setConfirmpassword(String confirmpassword) {
         confirmpasswordInput.sendKeys(confirmpassword);
         return this;
     }
 
 
-    public LoggedUserPage signUp(){
+    public LoggedUserPage signUp() {
         signupButton.click();
         return new LoggedUserPage(driver);
     }
-    public List<String> getErrors(){
+
+    public List<String> getErrors() {
         return errors
                 .stream()
-                .map(el->el.getAttribute("textContent"))
+                .map(el -> el.getAttribute("textContent"))
                 .collect(Collectors.toList());
 
     }
@@ -102,8 +103,8 @@ public class SignUpPage {
     }
 */
 
-    public SignUpPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
-        this.driver=driver;
+    public SignUpPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 }

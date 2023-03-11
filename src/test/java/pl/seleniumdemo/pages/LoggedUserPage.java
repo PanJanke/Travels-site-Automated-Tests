@@ -10,11 +10,11 @@ public class LoggedUserPage {
     @FindBy(xpath = "//h3[@class='RTL']")
     private WebElement heading;
 
-    public LoggedUserPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+    public LoggedUserPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 
-    public String getHeadingText(){
+    public String getHeadingText() {
         return heading.getText();
     }
 }

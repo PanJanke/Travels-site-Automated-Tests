@@ -38,50 +38,51 @@ public class HotelSearchPage {
     @FindBy(xpath = "//li[@id='li_myaccount']")
     private List<WebElement> myAccountLink;
 
-    @FindBy(xpath = "//a[text()='  Sign Up']" )
+    @FindBy(xpath = "//a[text()='  Sign Up']")
     private List<WebElement> signUpLink;
 
 
-    public HotelSearchPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
-        this.driver=driver;
+    public HotelSearchPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
 
-    public HotelSearchPage setCity(String cityName){
+    public HotelSearchPage setCity(String cityName) {
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
-        String xpath =String.format("//span[@class='select2-match' and text()='%s']",cityName);
+        String xpath = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         driver.findElement(By.xpath(xpath)).click();
         return this;
     }
 
-    public HotelSearchPage setDates(String checkin, String checkout){
+    public HotelSearchPage setDates(String checkin, String checkout) {
         checkinInput.sendKeys(checkin);
         checkoutInput.sendKeys(checkout);
         return this;
     }
-    public HotelSearchPage setTravelers(int adultsToAdd,int childToAdd){
+
+    public HotelSearchPage setTravelers(int adultsToAdd, int childToAdd) {
         travelersInput.click();
-        addTraveler(adultPlusBtn,adultsToAdd);
-        addTraveler(childPlusBtn,childToAdd);
+        addTraveler(adultPlusBtn, adultsToAdd);
+        addTraveler(childPlusBtn, childToAdd);
         return this;
     }
 
-    private void addTraveler(WebElement travelersBtn, int numberOfTravelers ){
-        for(int i=0;i<numberOfTravelers;i++)
+    private void addTraveler(WebElement travelersBtn, int numberOfTravelers) {
+        for (int i = 0; i < numberOfTravelers; i++)
             travelersBtn.click();
     }
 
-    public ResultsPage performSearch(){
+    public ResultsPage performSearch() {
         searchButton.click();
         return new ResultsPage(driver);
     }
 
-    public SignUpPage openSignUpForm(){
+    public SignUpPage openSignUpForm() {
         myAccountLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         signUpLink.get(1).click();
-        return  new SignUpPage(driver);
+        return new SignUpPage(driver);
     }
 
 }
