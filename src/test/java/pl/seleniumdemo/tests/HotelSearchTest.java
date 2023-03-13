@@ -1,10 +1,13 @@
 package pl.seleniumdemo.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
 import pl.seleniumdemo.pages.ResultsPage;
+import pl.seleniumdemo.utils.ExcelReader;
 
+import java.io.IOException;
 import java.util.List;
 
 public class HotelSearchTest extends BaseTest {
@@ -27,6 +30,28 @@ public class HotelSearchTest extends BaseTest {
         Assert.assertEquals("Hyatt Regency Perth",hotelNames.get(3));
 
     }
+    @DataProvider
+    public Object[][] data() throws IOException {
+        return ExcelReader.readExcel("testData.xlsx");
+    }
+
+    @Test(dataProvider = "data")
+    public void searchHotelTestWithDataProvider(String city, String hotel){
+
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        List<String> hotelNames = hotelSearchPage
+                .setCity(city)
+                .setDates("27/04/2021","29/04/2021")
+                .setTravelers(1,2)
+                .performSearch().getHotelNames();
+
+
+        Assert.assertEquals(hotel,hotelNames.get(0));
+
+    }
+
+
+
 
     @Test
     public void NoCitySearchTest(){
