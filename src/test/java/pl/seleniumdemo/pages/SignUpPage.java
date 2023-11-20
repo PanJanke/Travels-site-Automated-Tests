@@ -30,7 +30,7 @@ public class SignUpPage {
     @FindBy(name = "confirmpassword")
     private WebElement confirmpasswordInput;
 
-    @FindBy(xpath = "//button[@type='submit' and text()=' Sign Up']" )
+    @FindBy(xpath = "//button[@type='submit' and text()=' Sign Up']")
     private WebElement signupButton;
 
     @FindBy(xpath = "//div[@class='alert alert-danger']//p")
@@ -38,65 +38,66 @@ public class SignUpPage {
 
     private WebDriver driver;
 
-    public void setFirstName(String firstName){
+    public void setFirstName(String firstName) {
         firstNameInput.sendKeys(firstName);
     }
 
-    public void setLastName(String lastName){
+    public void setLastName(String lastName) {
         lastNameInput.sendKeys(lastName);
     }
 
-    public void setPhone(String phone){
+    public void setPhone(String phone) {
         phoneInput.sendKeys(phone);
     }
 
-    public void setEmail(String email){
+    public void setEmail(String email) {
         emailInput.sendKeys(email);
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         passwordInput.sendKeys(password);
     }
 
-    public void setConfirmpassword(String confirmpassword){
-        confirmpasswordInput.sendKeys(confirmpassword);
+    public void setConfirmPassword(String confirmPassword) {
+        confirmpasswordInput.sendKeys(confirmPassword);
     }
 
-    public void signUp(){
+    public void signUp() {
         signupButton.click();
     }
-    public List<String> getErrors(){
+
+    public List<String> getErrors() {
         SeleniumHelper.waitForNotEmptyList(driver, By.xpath("//div[@class='alert alert-danger']//p"));
         return errors
                 .stream()
-                .map(el->el.getAttribute("textContent"))
+                .map(el -> el.getAttribute("textContent"))
                 .collect(Collectors.toList());
 
     }
 
-    public void fillSignUpForm(String firstName,String lastName, String phone, String email, String password){
+    public void fillSignUpForm(String firstName, String lastName, String phone, String email, String password) {
         setFirstName(firstName);
         setLastName(lastName);
         setPhone(phone);
         setEmail(email);
         setPassword(password);
-        setConfirmpassword(password);
+        setConfirmPassword(password);
         signUp();
     }
 
-    public void fillSignUpForm(User user){
+    public void fillSignUpForm(User user) {
         setFirstName(user.getFirstName());
         setLastName(user.getLastName());
         setPhone(user.getPhone());
         setEmail(user.getEmail());
         setPassword(user.getPassword());
-        setConfirmpassword(user.getPassword());
+        setConfirmPassword(user.getPassword());
         signUp();
     }
 
 
-    public SignUpPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
-        this.driver=driver;
+    public SignUpPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 }

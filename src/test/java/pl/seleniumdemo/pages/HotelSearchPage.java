@@ -42,60 +42,60 @@ public class HotelSearchPage {
     @FindBy(xpath = "//li[@id='li_myaccount']")
     private List<WebElement> myAccountLink;
 
-    @FindBy(xpath = "//a[text()='  Sign Up']" )
+    @FindBy(xpath = "//a[text()='  Sign Up']")
     private List<WebElement> signUpLink;
 
 
-    public HotelSearchPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
-        this.driver=driver;
+    public HotelSearchPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
 
-    public HotelSearchPage setCity(String cityName){
+    public HotelSearchPage setCity(String cityName) {
         logger.info("Setting city " + cityName);
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
-        String xpath =String.format("//span[@class='select2-match' and text()='%s']",cityName);
-        SeleniumHelper.waitForElementToExist(driver,By.xpath(xpath));
+        String xpath = String.format("//span[@class='select2-match' and text()='%s']", cityName);
+        SeleniumHelper.waitForElementToExist(driver, By.xpath(xpath));
         driver.findElement(By.xpath(xpath)).click();
         logger.info("Setting city done");
         return this;
     }
 
-    public HotelSearchPage setDates(String checkin, String checkout){
-        logger.info("Setting dates checkin: "+checkin + " checkout: " +checkout);
+    public HotelSearchPage setDates(String checkin, String checkout) {
+        logger.info("Setting dates checkin: " + checkin + " checkout: " + checkout);
         checkinInput.sendKeys(checkin);
         checkoutInput.sendKeys(checkout);
         logger.info("Setting dates done");
         return this;
     }
-    public HotelSearchPage setTravelers(int adultsToAdd,int childToAdd){
-        logger.info("adding adults: " +adultsToAdd + " and kids: " + childToAdd);
+
+    public HotelSearchPage setTravelers(int adultsToAdd, int childToAdd) {
+        logger.info("adding adults: " + adultsToAdd + " and kids: " + childToAdd);
         travelersInput.click();
-        SeleniumHelper.waitForElementToBeVisible(driver,adultPlusBtn);
-        SeleniumHelper.waitForElementToBeVisible(driver,childPlusBtn);
-        addTraveler(adultPlusBtn,adultsToAdd);
-        addTraveler(childPlusBtn,childToAdd);
+        SeleniumHelper.waitForElementToBeVisible(driver, adultPlusBtn);
+        SeleniumHelper.waitForElementToBeVisible(driver, childPlusBtn);
+        addTraveler(adultPlusBtn, adultsToAdd);
+        addTraveler(childPlusBtn, childToAdd);
         logger.info("adding travelers done");
         return this;
     }
 
-    private void addTraveler(WebElement travelersBtn, int numberOfTravelers ){
-        for(int i=0;i<numberOfTravelers;i++)
+    private void addTraveler(WebElement travelersBtn, int numberOfTravelers) {
+        for (int i = 0; i < numberOfTravelers; i++)
             travelersBtn.click();
     }
 
-    public ResultsPage performSearch(){
+    public ResultsPage performSearch() {
         logger.info("performing search");
         searchButton.click();
         logger.info("performing search done");
         return new ResultsPage(driver);
     }
 
-    public void openSignUpForm(){
+    public void openSignUpForm() {
         myAccountLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        //driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         signUpLink.get(1).click();
     }
 

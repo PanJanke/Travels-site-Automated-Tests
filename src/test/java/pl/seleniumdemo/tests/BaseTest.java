@@ -14,18 +14,18 @@ import java.io.IOException;
 public class BaseTest {
 
     protected WebDriver driver;
-    protected static  ExtentHtmlReporter htmlreporter;
+    protected static ExtentHtmlReporter htmlreporter;
     protected static ExtentReports extentReports;
 
     @BeforeSuite
-    public void beforeSuite(){
+    public void beforeSuite() {
         htmlreporter = new ExtentHtmlReporter("index.html");
         extentReports = new ExtentReports();
         extentReports.attachReporter(htmlreporter);
     }
 
     @AfterSuite
-    public void afterSuite(){
+    public void afterSuite() {
         htmlreporter.flush();
         extentReports.flush();
     }
@@ -34,12 +34,12 @@ public class BaseTest {
     @BeforeMethod
     public void setup() throws IOException {
         driver = DriverFactory.getDriver();
-        //driver.manage().timeouts().implicitlyWait(10l, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("http://www.kurs-selenium.pl/demo/");
     }
+
     @AfterMethod
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 }

@@ -9,7 +9,7 @@ import java.util.Properties;
 public class PropertiesLoader {
 
     public static String loadProperty(String propertyName) throws IOException {
-        InputStream inputStream = new FileInputStream("C:\\Users\\OSOBISTY\\travels\\src\\test\\resources\\config.properties");
+        InputStream inputStream = new FileInputStream("/home/janke/IdeaProjects/travels/src/test/resources/config.properties");
         Properties properties = new Properties();
         properties.load(inputStream);
         return properties.getProperty(propertyName);
